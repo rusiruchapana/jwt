@@ -1,4 +1,4 @@
 package com.rusiruchapana.security;
 
-public class JWTSecretMaker {
+public class JWTSecretMakerTests {
 }
