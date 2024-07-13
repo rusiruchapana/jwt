@@ -9,6 +9,8 @@ import java.security.Key;
 import java.time.Instant;
 import java.util.Base64;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class JWTService {
@@ -17,15 +19,19 @@ public class JWTService {
 
 
     public String generateToken(UserDetails userDetails){
-        Jwts.builder()
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(Date.from(Instant.now()))
-                .setExpiration(Date.from(Instant.now().plusMillis(expiration)))
-                .signWith(getSigningKey())
-                .compact();
+        Map<String,String> claim = new HashMap<>();
+        claim.put("iss","www.rusiruchapana.com");
+
+        return Jwts.builder()
+                    .setClaims(claim)
+                    .setSubject(userDetails.getUsername())
+                    .setIssuedAt(Date.from(Instant.now()))
+                    .setExpiration(Date.from(Instant.now().plusMillis(expiration)))
+                    .signWith(getSigningKey())
+                    .compact();
 
 
-        return null;
+
     }
 
     private Key getSigningKey() {
